@@ -42,6 +42,3 @@ file-management-system/
 - Add file versioning.
 - Implement real-time notifications for file operations.
 - Optimize API performance for high concurrency.
-
-
-你可以將此內容直接放入你的 GitHub 專案的 `README.md` 文件中，清楚展示專案細節與使用方法！
