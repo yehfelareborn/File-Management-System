@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # 前端 React 應用
+  frontend:
+    build:
+      context: ./frontend  # 前端目錄
+    ports:
+      - "3000:3000"  # 暴露 React 端口
+    depends_on:
+      - backend  # 確保後端啟動後再啟動前端
+
+  # 後端 Flask 應用
+  backend:
+    build:
+      context: ./backend  # 後端目錄
+    ports:
+      - "5000:5000"  # 暴露 Flask 端口
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+    depends_on:
+      - minio  # 確保 MinIO 啟動後再啟動後端
+
+  # MinIO 服務
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    ports:
+      - "9000:9000"  # MinIO Web 界面
+      - "9001:9001"  # 管理界面
+    command: server /data
+    volumes:
+      - minio_data:/data
+
+volumes:
+  minio_data:
