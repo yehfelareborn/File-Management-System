@@ -10,8 +10,7 @@ import os
 file_mgmt = Blueprint('file_mgmt', __name__)
 
 app = Flask(__name__)
-CORS(app)  # 启用 CORS，允许所有域名的请求
-
+CORS(app)  
 
 minio_client = Minio(
     "127.0.0.1:9000",  # MinIO 服務地址
@@ -20,10 +19,10 @@ minio_client = Minio(
     secure=False  # 設置為 False 表示使用 http 協議
 )
 
-# 存儲桶名稱
+
 MINIO_BUCKET = "mybucket"
 
-# 檢查是否已經創建存儲桶
+
 if not minio_client.bucket_exists(MINIO_BUCKET):
     minio_client.make_bucket(MINIO_BUCKET)
 
@@ -38,7 +37,7 @@ def upload_file():
     file = request.files['file']
     file_name = file.filename
 
-    # 使用 MinIO 上传文件
+
     try:
         file.seek(0, os.SEEK_END)  # Move the pointer to the end to get the file size
         file_size = file.tell()    # Get the file size
@@ -58,7 +57,7 @@ def upload_file():
 @jwt_required()
 def list_files():
     try:
-        # 获取 MinIO 中的文件列表
+        
         objects = minio_client.list_objects(MINIO_BUCKET)
         file_names = [obj.object_name for obj in objects]
 
@@ -70,7 +69,7 @@ def list_files():
 @jwt_required()
 def download_file(filename):
     try:
-        # 从 MinIO 下载文件
+        
         file_data = minio_client.get_object(MINIO_BUCKET, filename)
         
         return Response(

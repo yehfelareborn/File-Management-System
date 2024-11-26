@@ -22,7 +22,6 @@ app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(file_mgmt, url_prefix='/file')
 
 with app.app_context():
-    db.create_all()  # 初始化數據庫
-
+    db.create_all()  # 初始化資料庫
 if __name__ == '__main__':
     app.run(debug=True)

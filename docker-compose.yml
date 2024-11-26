@@ -6,7 +6,7 @@ services:
     build:
       context: ./frontend  # 前端目錄
     ports:
-      - "3000:3000"  # 暴露 React 端口
+      - "3000:3000" 
     depends_on:
       - backend  # 確保後端啟動後再啟動前端
 
@@ -15,7 +15,7 @@ services:
     build:
       context: ./backend  # 後端目錄
     ports:
-      - "5000:5000"  # 暴露 Flask 端口
+      - "5000:5000"  
     environment:
       - FLASK_APP=app.py
       - FLASK_ENV=development
